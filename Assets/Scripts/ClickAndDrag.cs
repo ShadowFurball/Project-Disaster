@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClickAndDrag : MonoBehaviour {
-
+public class ClickAndDrag : MonoBehaviour
+{
     private bool beingDragged = false;
     private GameManager gameManager;
+    private Wander wanderScript;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         gameManager = GameManager.instance;
+        wanderScript = GetComponent<Wander>();
 	}
 	
 	// Update is called once per frame
@@ -26,6 +29,7 @@ public class ClickAndDrag : MonoBehaviour {
             {
                 beingDragged = true;
                 gameManager.selectedPerson = gameObject;
+                wanderScript.StopWander();
             }
         }
 
