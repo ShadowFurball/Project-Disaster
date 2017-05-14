@@ -75,24 +75,24 @@ public class GameManager : MonoBehaviour
     public void CreateWhirlwind()
     {
         // Create Alert, pass in Disaster class to instantiate upon Alert completion
-        GameObject obj = Instantiate(alerts[0], new Vector3(-7.5f, 0f, 0f), Quaternion.identity) as GameObject;
+        GameObject obj = Instantiate(alerts[0], new Vector3(0f, 540f, 0f), Quaternion.identity) as GameObject;
 
         Alert alert = obj.GetComponent<Alert>();
         alert.onComplete = () =>
         {
-            Instantiate(disasters[0], new Vector3(-11f, 0f, 0f), Quaternion.identity);
+            Instantiate(disasters[0], new Vector3(-200f, 540f, 0f), Quaternion.identity);
         };
     }
 
     public void CreateMeteor()
     {
         // Create Alert, pass in Disaster class to instantiate upon Alert completion
-        GameObject obj = Instantiate(alerts[1], new Vector3(2f, 2f, 0f), Quaternion.identity) as GameObject;
+        GameObject obj = Instantiate(alerts[1], new Vector3(1160f, 740f, 0f), Quaternion.identity) as GameObject;
 
         Alert alert = obj.GetComponent<Alert>();
         alert.onComplete = () =>
         {
-            Instantiate(disasters[1], new Vector3(2f, 2f, 0f), Quaternion.identity);
+            Instantiate(disasters[1], new Vector3(1160f, 740f, 0f), Quaternion.identity);
         };
     }
 

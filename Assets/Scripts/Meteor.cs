@@ -15,7 +15,7 @@ public class Meteor : Disaster
         meteorAnim = transform.GetChild(0);
         Vector3 initialPosition = meteorAnim.position;
 
-        TweenFactory.Tween(null, 0f, 7f, 0.8f, TweenScaleFunctions.Linear, (t) =>
+        TweenFactory.Tween(null, 0f, 700f, 0.8f, TweenScaleFunctions.Linear, (t) =>
         {
             meteorAnim.position = new Vector3(initialPosition.x - t.CurrentValue, initialPosition.y - t.CurrentValue, 0f);
         }, (t) =>

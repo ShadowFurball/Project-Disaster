@@ -5,8 +5,8 @@ using DigitalRuby.Tween;
 
 public class Wander : MonoBehaviour
 {
-    const float MOVE_SPEED = 1f;
-    const float MAX_MOVE_DISTANCE = 2f;
+    const float MOVE_SPEED = 100f;
+    const float MAX_MOVE_DISTANCE = 200f;
     const float MIN_IDLE_TIME = 1f;
     const float MAX_IDLE_TIME = 5f;
 
@@ -26,8 +26,16 @@ public class Wander : MonoBehaviour
             return;
         }
 
-        Vector2 point = Random.insideUnitCircle * MAX_MOVE_DISTANCE;
-        Vector3 targetPosition = transform.position + new Vector3(point.x, point.y, 0f);
+        Vector2 point;
+        Vector3 targetPosition;
+        Vector3 bounds = GetComponent<SpriteRenderer>().bounds.extents;
+
+        do
+        {
+            point = Random.insideUnitCircle * MAX_MOVE_DISTANCE;
+            targetPosition = transform.position + new Vector3(point.x, point.y, 0f);
+        }
+        while (targetPosition.x < bounds.x || targetPosition.x > Screen.width - bounds.x || targetPosition.y < bounds.y || targetPosition. y > Screen.height - bounds.y);
 
         float distance = Vector3.Distance(transform.position, targetPosition);
         float time = distance / MOVE_SPEED;

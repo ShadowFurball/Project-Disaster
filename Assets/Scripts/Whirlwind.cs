@@ -14,7 +14,7 @@ public class Whirlwind : Disaster
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x + 0.075f, transform.position.y, transform.position.x);
+        transform.position = new Vector3(transform.position.x + 7.5f, transform.position.y, transform.position.z);
         transform.Rotate(0, 0, -Time.deltaTime * 400);
     }
 }
