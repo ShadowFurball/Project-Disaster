@@ -14,6 +14,29 @@ public class GameManager : MonoBehaviour
 
     public GameObject selectedPerson = null;
 
+    private const int MAP_WIDTH = 30;
+    private const int MAP_HEIGHT = 17;
+
+    private int[,] MAP = new int[MAP_HEIGHT, MAP_WIDTH]{
+        {16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16, 0, 4, 4, 4, 4, 4, 3,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16, 5,12,12,12,12,12, 7,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16, 5,12,12,12,12,12, 7,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16, 5,12,12,12,12,12, 7,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16, 5,12,12,12,12,12, 7,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16, 5,12,12,12,12,12, 7,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16, 1, 6, 6, 6, 6, 6, 2,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+        {16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16}
+    };
+
     // Use this for initialization
     void Awake()
     {
@@ -24,18 +47,27 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        InitGame();
+        StartCoroutine(CreateMap());
     }
 
-    void InitGame()
+    IEnumerator CreateMap()
     {
-        for (int x = 0; x < 29; x++)
+        for (int y = 0; y < MAP_HEIGHT; y++)
         {
-            for (int y = 0; y < 19; y++)
+            for (int x = 0; x < MAP_WIDTH; x++)
             {
                 GameObject tile = new GameObject("tile" + x + "_" + y);
-                tile.transform.position = new Vector3((x * 64f)/100f, (y * 64f)/100f, 0f);
-                tile.AddComponent<SpriteRenderer>().sprite = tileSprites[Random.Range(0, tileSprites.Length)];
+
+                int tileInfo = MAP[y, x];
+                int spriteIndex = tileInfo / (tileSprites.Length - 1);
+                float rotationAmount = (int)(tileInfo % (tileSprites.Length - 1)) * 90f;
+
+                tile.AddComponent<SpriteRenderer>().sprite = tileSprites[spriteIndex];
+                tile.transform.position = Camera.main.ScreenToWorldPoint(new Vector3((x * 64f) + 32f, 1080 - (y * 64f) - 32f, 0f));
+                tile.transform.localEulerAngles = new Vector3(0f, 0f, rotationAmount);
+
+                if (x % 4 == 1) // Do four tiles at a time
+                    yield return new WaitForSeconds(0.005f);
             }
         }
     }
