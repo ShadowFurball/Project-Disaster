@@ -7,12 +7,14 @@ public class ClickAndDrag : MonoBehaviour
     private bool beingDragged = false;
     private GameManager gameManager;
     private Wander wanderScript;
+    private Attract attractScript;
 
 	// Use this for initialization
 	void Start ()
     {
         gameManager = GameManager.instance;
         wanderScript = GetComponent<Wander>();
+        attractScript = GetComponent<Attract>();
 	}
 	
 	// Update is called once per frame
@@ -22,8 +24,15 @@ public class ClickAndDrag : MonoBehaviour
         bool overSprite = GetComponent<SpriteRenderer>().bounds.Contains(mousePosition);
         beingDragged = beingDragged && Input.GetButton("Fire1");
 
+        if (!overSprite && Input.GetButtonDown("Fire1"))
+        {
+            wanderScript.StopWander();
+            attractScript.DoAttract(mousePosition);
+        }
+
         if (overSprite && gameManager.selectedPerson == null)
         {
+            attractScript.StopAttract();
             //If we've pressed down on the mouse (or touched on the iphone)
             if (Input.GetButton("Fire1"))
             {
