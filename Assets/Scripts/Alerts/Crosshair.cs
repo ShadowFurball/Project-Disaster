@@ -15,7 +15,7 @@ public class Crosshair : Alert
         }, (t) =>
         {
             Destroy(gameObject);
-            onComplete();
+            onComplete(this);
         });
     }
 }

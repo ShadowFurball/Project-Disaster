@@ -2,20 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Alert : MonoBehaviour
+public abstract class Alert : MonoBehaviour
 {
-    public delegate void OnComplete();
+    public delegate void OnComplete(Alert alert);
     public OnComplete onComplete;
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

@@ -75,30 +75,19 @@ public class GameManager : MonoBehaviour
     public void CreateWhirlwind()
     {
         // Create Alert, pass in Disaster class to instantiate upon Alert completion
-        GameObject obj = Instantiate(alerts[0], new Vector3(0f, 540f, 0f), Quaternion.identity) as GameObject;
-
-        Alert alert = obj.GetComponent<Alert>();
-        alert.onComplete = () =>
+        Instantiate(alerts[0]).GetComponent<Alert>().onComplete = (alert) =>
         {
-            Instantiate(disasters[0], new Vector3(-200f, 540f, 0f), Quaternion.identity);
+            Whirlwind whirlwind = Instantiate(disasters[0], new Vector3(-200f, 540f, 0f), Quaternion.identity).GetComponent<Whirlwind>();
+            whirlwind.OffsetFromAlert(alert);
         };
     }
 
     public void CreateMeteor()
     {
         // Create Alert, pass in Disaster class to instantiate upon Alert completion
-        GameObject obj = Instantiate(alerts[1], new Vector3(1160f, 740f, 0f), Quaternion.identity) as GameObject;
-
-        Alert alert = obj.GetComponent<Alert>();
-        alert.onComplete = () =>
+        Instantiate(alerts[1], new Vector3(1160f, 740f, 0f), Quaternion.identity).GetComponent<Alert>().onComplete = (alert) =>
         {
             Instantiate(disasters[1], new Vector3(1160f, 740f, 0f), Quaternion.identity);
         };
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

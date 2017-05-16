@@ -12,7 +12,6 @@ public class Attract : MonoBehaviour {
     {
         Vector3 bounds = GetComponent<SpriteRenderer>().bounds.extents;
 
-        while (targetPosition.x < bounds.x || targetPosition.x > Screen.width - bounds.x || targetPosition.y < bounds.y || targetPosition.y > Screen.height - bounds.y) ;
         float distance = Vector3.Distance(transform.position, targetPosition);
         float time = distance / MOVE_SPEED;
 
